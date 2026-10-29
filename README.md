@@ -69,6 +69,12 @@ adb shell am start -n com.yunseong.phonemonitor/.WidgetGalleryActivity --es clea
 - [ ] 삼성·샤오미 등 실제 기기에서 [정리하기]가 제조사 화면을 여는지 확인
 - [ ] 실제 기기 여러 대에서 CPU 속도·전류 값 확인
 
+## 릴리스 빌드 (코드 축소·난독화)
+
+- R8로 안 쓰는 코드·리소스 제거, 클래스 이름 난독화·한 패키지로 재배치, 릴리스에서 `Log.v/d/i` 제거 (`app/proguard-rules.pro`)
+- 출시할 때마다 `app/build/outputs/mapping/release/mapping.txt`를 보관한다. 난독화된 크래시 기록을 원래 이름으로 되돌릴 때 필요 (AAB로 올리면 Play Console이 함께 받음)
+- 릴리스 빌드는 디버그와 다르게 동작할 수 있으니 출시 전 꼭 실제로 설치해 본다. 예: Glance가 끌어오는 WorkManager 2.7.1은 난독화하면 시작 때 죽어서 2.12.0으로 고정함
+
 ## 빌드
 
 ```bash

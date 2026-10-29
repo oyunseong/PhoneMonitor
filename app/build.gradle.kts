@@ -19,6 +19,8 @@ android {
 
     buildTypes {
         release {
+            // R8: 안 쓰는 코드·리소스 제거 + 이름 난독화. 규칙은 proguard-rules.pro
+            // 출시할 때마다 build/outputs/mapping/release/mapping.txt 를 보관한다 (크래시 기록 해석용, AAB로 올리면 Play가 함께 받음)
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -45,6 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.material3)
+    implementation(libs.androidx.work.runtime)
     debugImplementation(libs.androidx.compose.ui.tooling)
     testImplementation(libs.junit)
 }
