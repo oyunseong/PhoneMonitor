@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PhoneMonitor">
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.PhoneMonitor.Splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".widget.ClassicWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_classic">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_classic_info" />
+        </receiver>
+        <receiver
+            android:name=".widget.RingWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_ring">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_ring_info" />
+        </receiver>
+        <receiver
+            android:name=".widget.GradientWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_gradient">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_gradient_info" />
+        </receiver>
+        <receiver
+            android:name=".widget.TerminalWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_terminal">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_terminal_info" />
+        </receiver>
+        <receiver
+            android:name=".widget.FocusWidgetReceiver"
+            android:exported="true"
+            android:label="@string/widget_focus">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_focus_info" />
+        </receiver>
+
+        <!-- 재부팅·업데이트 뒤 실시간 모드 복원. specialUse는 Android 15의 부팅 시작 금지 목록에 없다 -->
+        <receiver
+            android:name=".live.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 스토어 심사 때 specialUse 사유를 Play Console에도 같은 내용으로 적는다 -->
+        <service
+            android:name=".live.LiveUpdateService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the user-placed home screen widget showing live device status (battery, memory, CPU speed) while the user turns on live mode. Stopped from the app or the notification." />
+        </service>
+    </application>
+</manifest>

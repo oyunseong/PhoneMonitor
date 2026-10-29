@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- 개발용: 위젯 5종 × 크기를 한 화면에 그린다. 릴리스에는 들어가지 않는다 -->
+        <activity
+            android:name=".WidgetGalleryActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PhoneMonitor" />
+    </application>
+</manifest>
