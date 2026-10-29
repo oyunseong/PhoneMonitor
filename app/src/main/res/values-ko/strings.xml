@@ -94,4 +94,16 @@
     <string name="card_widgets">위젯</string>
     <string name="widgets_hint">모든 모양은 1×1부터 4×2까지 크기를 바꿀 수 있어요.</string>
     <string name="add">추가</string>
+    <string name="cleanup_button">정리하기</string>
+    <string name="cleanup_note">Android 정책상 앱이 직접 정리할 수 없어, 휴대폰에 있는 정리 화면으로 이동해요.</string>
+    <string name="cleanup_opens">%1$s 화면으로 이동</string>
+    <string name="cleanup_failed">이 휴대폰에서 정리 화면을 찾지 못했어요.</string>
+    <string name="cleanup_samsung_ram">삼성 디바이스 케어 &#8250; 메모리</string>
+    <string name="cleanup_samsung">삼성 디바이스 케어</string>
+    <string name="cleanup_xiaomi">샤오미 클리너</string>
+    <string name="cleanup_xiaomi_security">샤오미 보안</string>
+    <string name="cleanup_phone_manager">휴대폰 관리자</string>
+    <string name="cleanup_vivo">i 매니저</string>
+    <string name="cleanup_storage">저장 공간 정리</string>
+    <string name="cleanup_storage_settings">저장 공간 설정</string>
 </resources>

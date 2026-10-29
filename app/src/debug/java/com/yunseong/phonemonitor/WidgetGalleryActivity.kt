@@ -32,6 +32,12 @@ class WidgetGalleryActivity : Activity() {
             "classic" to ClassicStatusWidget(), "ring" to RingStatusWidget(), "gradient" to GradientStatusWidget(),
             "terminal" to TerminalStatusWidget(), "focus" to FocusStatusWidget(),
         )
+        // 다른 제조사 정리 화면 시도 시험: --es cleanup samsung
+        intent.getStringExtra("cleanup")?.let {
+            android.util.Log.i("Gallery", "cleanup $it opened=${com.yunseong.phonemonitor.cleanup.Cleanup.open(this, it)}")
+            finish()
+            return
+        }
         val only = intent.getStringExtra("style")
         if (intent.getBooleanExtra("export", false)) {
             scope.launch { exportPreviews(widgets) }
@@ -87,6 +93,14 @@ class WidgetGalleryActivity : Activity() {
             java.io.File(dir, "preview_$name.png").outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
             android.util.Log.i("Gallery", "exported $name")
         }
+        // Play 스토어 아이콘 512×512 (모서리는 스토어가 깎는다)
+        val icon = android.graphics.Bitmap.createBitmap(512, 512, android.graphics.Bitmap.Config.ARGB_8888)
+        val canvas = android.graphics.Canvas(icon)
+        for (layer in listOf(R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground)) {
+            getDrawable(layer)!!.apply { setBounds(0, 0, 512, 512) }.draw(canvas)
+        }
+        java.io.File(dir, "ic_launcher_512.png").outputStream().use { icon.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        android.util.Log.i("Gallery", "exported icon")
         finish()
     }
 

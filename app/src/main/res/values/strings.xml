@@ -94,4 +94,16 @@
     <string name="card_widgets">Widgets</string>
     <string name="widgets_hint">Every style can be resized from 1×1 to 4×2.</string>
     <string name="add">Add</string>
+    <string name="cleanup_button">Clean up</string>
+    <string name="cleanup_note">Android doesn\'t let apps clean other apps directly, so this opens your phone\'s own cleanup screen.</string>
+    <string name="cleanup_opens">Opens %1$s</string>
+    <string name="cleanup_failed">No cleanup screen found on this phone.</string>
+    <string name="cleanup_samsung_ram">Samsung Device Care &#8250; Memory</string>
+    <string name="cleanup_samsung">Samsung Device Care</string>
+    <string name="cleanup_xiaomi">Xiaomi Cleaner</string>
+    <string name="cleanup_xiaomi_security">Xiaomi Security</string>
+    <string name="cleanup_phone_manager">Phone Manager</string>
+    <string name="cleanup_vivo">i Manager</string>
+    <string name="cleanup_storage">Free up space</string>
+    <string name="cleanup_storage_settings">Storage settings</string>
 </resources>

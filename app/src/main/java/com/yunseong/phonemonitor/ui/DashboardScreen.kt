@@ -56,7 +56,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import android.widget.Toast
 import com.yunseong.phonemonitor.R
+import com.yunseong.phonemonitor.cleanup.Cleanup
 import com.yunseong.phonemonitor.data.BatteryStats
 import com.yunseong.phonemonitor.data.CpuStats
 import com.yunseong.phonemonitor.data.DeviceStats
@@ -287,7 +289,39 @@ private fun MemoryStorageCard(s: DeviceStats, modifier: Modifier) {
         Spacer(Modifier.height(20.dp))
         CardTitle(stringResource(R.string.card_storage), Accent.storage)
         UsageRow(s.storage.usedBytes, s.storage.availableBytes, s.storage.totalBytes, Accent.storage)
+        Spacer(Modifier.height(20.dp))
+        CleanupButton()
     }
+}
+
+/** 휴대폰의 정리 화면(삼성 디바이스 케어 등)으로 이동. 앱이 직접 정리하지는 않는다 */
+@Composable
+private fun CleanupButton() {
+    val context = LocalContext.current
+    val target = remember { Cleanup.best(context) }
+    val failed = stringResource(R.string.cleanup_failed)
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(52.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(Brush.horizontalGradient(listOf(Accent.memory[1], Color(0xFFEC4899), Accent.storage[1])))
+            .clickable {
+                if (!Cleanup.open(context)) Toast.makeText(context, failed, Toast.LENGTH_SHORT).show()
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(stringResource(R.string.cleanup_button), color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+    }
+    Spacer(Modifier.height(8.dp))
+    Text(
+        listOfNotNull(
+            target?.let { stringResource(R.string.cleanup_opens, stringResource(it.label)) },
+            stringResource(R.string.cleanup_note),
+        ).joinToString("\n"),
+        style = MaterialTheme.typography.labelMedium,
+        color = LocalSurfaces.current.muted,
+    )
 }
 
 @Composable

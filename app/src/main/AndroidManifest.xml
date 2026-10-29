@@ -6,6 +6,24 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- 정리 화면 찾기 (cleanup/Cleanup.kt). 목록에 없는 앱은 찾을 수 없다 -->
+    <queries>
+        <package android:name="com.samsung.android.lool" />
+        <package android:name="com.miui.cleanmaster" />
+        <package android:name="com.miui.securitycenter" />
+        <package android:name="com.huawei.systemmanager" />
+        <package android:name="com.hihonor.systemmanager" />
+        <package android:name="com.oplus.phonemanager" />
+        <package android:name="com.coloros.phonemanager" />
+        <package android:name="com.iqoo.secure" />
+        <intent>
+            <action android:name="miui.intent.action.GARBAGE_CLEANUP" />
+        </intent>
+        <intent>
+            <action android:name="android.os.storage.action.MANAGE_STORAGE" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

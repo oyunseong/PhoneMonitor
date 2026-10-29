@@ -13,6 +13,7 @@ data/       StatsReader (기기 상태 읽기), StatsStore (앱·위젯·알림�
 ui/         DashboardScreen, SettingsScreen, PermissionScreen (첫 실행 권한 안내), Components (게이지·애니메이션), Theme
 permission/ AppPermission (요청하는 권한 목록, 필요할 때 바로 요청 / 막혔으면 설정 화면으로)
 widget/     Widgets (위젯 5종 등록·크기 구분), WidgetParts (공통 부품·링 그림), *Style.kt (모양별 화면)
+cleanup/    Cleanup (제조사별 정리 화면으로 이동: 삼성 디바이스 케어, 샤오미, 화웨이, 오포, 비보 → 없으면 저장 공간 정리)
 live/       LiveUpdateService (실시간 모드: 포그라운드 서비스로 3초마다 위젯·알림 갱신), BootReceiver (재부팅 뒤 복원)
 src/debug/  WidgetGalleryActivity (개발용: 위젯 5종 × 크기를 한 화면에, 미리보기 PNG 만들기)
 ```
@@ -29,6 +30,8 @@ src/debug/  WidgetGalleryActivity (개발용: 위젯 5종 × 크기를 한 화�
 
 ## Android가 막아 둔 것
 
+- **메모리 정리:** Android 14부터 앱은 다른 앱을 종료할 수 없다 → [정리하기]는 휴대폰의 정리 화면을 연다. 제조사 화면은 버전마다 위치가 달라 차례로 시도하고, 실패하면 저장 공간 정리 화면. 새 제조사를 넣을 때는 `AndroidManifest.xml`의 `<queries>`에도 추가
+
 - **CPU 사용률:** Android 8부터 일반 앱은 읽을 수 없다 → 코어별 현재 속도를 보여 준다
 - **칩 온도:** 공개 API 없음 → 배터리 온도 + 발열 단계(`PowerManager.currentThermalStatus`)와 성능 제한까지 남은 여유(`getThermalHeadroom`, Android 11+)
 - **충전 전류:** 기기마다 단위·부호가 달라 참고용
@@ -42,9 +45,12 @@ src/debug/  WidgetGalleryActivity (개발용: 위젯 5종 × 크기를 한 화�
 ```bash
 # 전부 그려 보기 (style 생략 시 5종 모두)
 adb shell am start -n com.yunseong.phonemonitor/.WidgetGalleryActivity --es style ring
-# 위젯 고르기 화면 미리보기 PNG 다시 만들기
+# 위젯 미리보기 PNG + 스토어 아이콘(512) 다시 만들기
 adb shell am start -n com.yunseong.phonemonitor/.WidgetGalleryActivity --ez export true
 for s in classic ring gradient terminal focus; do adb pull /sdcard/Android/data/com.yunseong.phonemonitor/files/previews/preview_$s.png app/src/main/res/drawable-nodpi/; done
+adb pull /sdcard/Android/data/com.yunseong.phonemonitor/files/previews/ic_launcher_512.png store/
+# 다른 제조사 정리 화면 시도 (해당 기기가 아니면 저장 공간 화면으로 넘어가는지)
+adb shell am start -n com.yunseong.phonemonitor/.WidgetGalleryActivity --es cleanup samsung
 ```
 
 ## Glance 주의
@@ -59,7 +65,8 @@ for s in classic ring gradient terminal focus; do adb pull /sdcard/Android/data/
 - [ ] 서명 키 만들기 (keystore는 git에 올리지 않음, `.gitignore`에 있음)
 - [ ] Play Console "포그라운드 서비스 권한" 신고: `specialUse` 사유 (AndroidManifest의 설명과 같게) + 동작 영상
 - [ ] 개인정보처리방침 URL (수집·전송하는 데이터 없음으로 작성)
-- [ ] 스토어 스크린샷 (위젯 미리보기 PNG는 있음)
+- [ ] 스토어 스크린샷 (위젯 미리보기 PNG, 스토어 아이콘 `store/ic_launcher_512.png`는 있음)
+- [ ] 삼성·샤오미 등 실제 기기에서 [정리하기]가 제조사 화면을 여는지 확인
 - [ ] 실제 기기 여러 대에서 CPU 속도·전류 값 확인
 
 ## 빌드

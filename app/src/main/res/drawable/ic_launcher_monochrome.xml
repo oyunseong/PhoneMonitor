@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 테마 아이콘(Android 13+)용 단색. 투명도만 쓰인다 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:pathData="M34.91,73.09 A27,27 0 1,1 73.09,73.09" android:strokeColor="#40FFFFFF" android:strokeWidth="5.6" android:strokeLineCap="round" android:fillColor="#00000000" />
+    <path android:pathData="M34.91,73.09 A27,27 0 1,1 80.95,52.30" android:strokeColor="#FFFFFFFF" android:strokeWidth="5.6" android:strokeLineCap="round" android:fillColor="#00000000" />
+    <path android:pathData="M40.21,67.79 A19.5,19.5 0 1,1 67.79,67.79" android:strokeColor="#40FFFFFF" android:strokeWidth="5.6" android:strokeLineCap="round" android:fillColor="#00000000" />
+    <path android:pathData="M40.21,67.79 A19.5,19.5 0 0,1 65.95,38.59" android:strokeColor="#FFFFFFFF" android:strokeWidth="5.6" android:strokeLineCap="round" android:fillColor="#00000000" />
+    <path android:pathData="M45.51,62.49 A12,12 0 1,1 62.49,62.49" android:strokeColor="#40FFFFFF" android:strokeWidth="5.6" android:strokeLineCap="round" android:fillColor="#00000000" />
+    <path android:pathData="M45.51,62.49 A12,12 0 0,1 51.75,42.21" android:strokeColor="#FFFFFFFF" android:strokeWidth="5.6" android:strokeLineCap="round" android:fillColor="#00000000" />
+    <path android:pathData="M54,54 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0" android:fillColor="#FFFFFFFF" />
+</vector>
