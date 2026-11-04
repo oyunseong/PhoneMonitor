@@ -19,6 +19,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -129,16 +131,18 @@ fun RingGauge(
     val animated by animateFloatAsState(fraction.coerceIn(0f, 1f), gaugeSpring, label = "gauge")
     val track = LocalSurfaces.current.track
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(Modifier.size(size), contentAlignment = Alignment.Center) {
-            Canvas(Modifier.size(size)) {
+        // 폭이 모자라면 정사각형을 유지한 채 줄어든다. 정사각형이 아니면 rotate 때문에 호가 어긋난다
+        Box(Modifier.widthIn(max = size).fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
+            Canvas(Modifier.matchParentSize()) {
                 val stroke = 10.dp.toPx()
-                val inset = stroke / 2
-                val arcSize = Size(this.size.width - stroke, this.size.height - stroke)
-                drawArc(track, 135f, 270f, false, Offset(inset, inset), arcSize, style = Stroke(stroke, cap = StrokeCap.Round))
+                val side = this.size.minDimension - stroke
+                val topLeft = Offset((this.size.width - side) / 2, (this.size.height - side) / 2)
+                val arcSize = Size(side, side)
+                drawArc(track, 135f, 270f, false, topLeft, arcSize, style = Stroke(stroke, cap = StrokeCap.Round))
                 rotate(90f) {
                     drawArc(
                         Brush.sweepGradient(listOf(colors[0], colors[1], colors[0])),
-                        45f, 270f * animated, false, Offset(inset, inset), arcSize,
+                        45f, 270f * animated, false, topLeft, arcSize,
                         style = Stroke(stroke, cap = StrokeCap.Round),
                     )
                 }

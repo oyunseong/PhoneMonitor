@@ -158,9 +158,9 @@ private fun Header(s: DeviceStats, onOpenSettings: () -> Unit, modifier: Modifie
 private fun Gauges(s: DeviceStats, modifier: Modifier) {
     Card(modifier) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            RingGauge(s.battery.percent / 100f, Accent.battery, stringResource(R.string.card_battery), "${s.battery.percent}%")
-            RingGauge(s.memory.usedPercent / 100f, Accent.memory, stringResource(R.string.label_ram), "${s.memory.usedPercent}%")
-            RingGauge(s.storage.usedPercent / 100f, Accent.storage, stringResource(R.string.card_storage), "${s.storage.usedPercent}%")
+            RingGauge(s.battery.percent / 100f, Accent.battery, stringResource(R.string.card_battery), "${s.battery.percent}%", Modifier.weight(1f))
+            RingGauge(s.memory.usedPercent / 100f, Accent.memory, stringResource(R.string.label_ram), "${s.memory.usedPercent}%", Modifier.weight(1f))
+            RingGauge(s.storage.usedPercent / 100f, Accent.storage, stringResource(R.string.card_storage), "${s.storage.usedPercent}%", Modifier.weight(1f))
         }
     }
 }
