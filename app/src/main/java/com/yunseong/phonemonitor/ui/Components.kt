@@ -38,7 +38,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,11 +63,18 @@ import androidx.compose.ui.unit.sp
 
 private val gaugeSpring = spring<Float>(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow)
 
-/** 처음 나타날 때 순서대로 아래에서 올라온다 */
+/**
+ * 처음 나타날 때 순서대로 아래에서 올라온다.
+ * LazyColumn에서 스크롤로 사라졌다 돌아오면 remember가 초기화되므로,
+ * 이미 보여줬다는 사실은 rememberSaveable로 기억해 다시 재생하지 않는다.
+ */
 @Composable
 fun Modifier.entrance(index: Int): Modifier {
-    val progress = remember { Animatable(0f) }
+    var shown by rememberSaveable { mutableStateOf(false) }
+    val progress = remember { Animatable(if (shown) 1f else 0f) }
     LaunchedEffect(Unit) {
+        if (shown) return@LaunchedEffect
+        shown = true
         progress.animateTo(1f, tween(durationMillis = 520, delayMillis = 70 * index))
     }
     return graphicsLayer {
